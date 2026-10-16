@@ -8,7 +8,8 @@ System design notes for SDE preparation, organized in the order of the study roa
 
 #### Week 1 — Fundamentals + Databases
 - [Serverless vs. Serverful](HLD/01-serverless-vs-serverful.md)
-- Horizontal vs. Vertical Scaling
+- [Horizontal vs. Vertical Scaling](HLD/02-horizontal-vs-vertical-scaling.md)
+- [Application & Database Optimizations Before Scaling](HLD/03-application-database-optimizations.md) *(supplementary topic)*
 - Threads — basic OS-level understanding
 - Pages — memory paging basics
 - How the Internet Works — DNS, TCP handshake, HTTP request/response
