@@ -11,7 +11,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [Horizontal vs. Vertical Scaling](HLD/02-horizontal-vs-vertical-scaling.md)
 - [Application & Database Optimizations Before Scaling](HLD/03-application-database-optimizations.md) *(supplementary topic)*
 - [Threads — OS-Level Fundamentals](HLD/04-threads.md)
-- Pages — memory paging basics
+- [Pages, Virtual Memory & JVM Memory Basics](HLD/05-pages-and-memory-paging.md)
 - How the Internet Works — DNS, TCP handshake, HTTP request/response
 - SQL vs. NoSQL Databases
 - In-Memory Databases — Redis/Memcached vs. disk-based databases
