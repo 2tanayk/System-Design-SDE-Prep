@@ -12,7 +12,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [Application & Database Optimizations Before Scaling](HLD/03-application-database-optimizations.md) *(supplementary topic)*
 - [Threads — OS-Level Fundamentals](HLD/04-threads.md)
 - [Pages, Virtual Memory & JVM Memory Basics](HLD/05-pages-and-memory-paging.md)
-- How the Internet Works — DNS, TCP handshake, HTTP request/response
+- [How the Internet Works — DNS, TCP, TLS, HTTP](HLD/06-how-the-internet-works.md)
 - SQL vs. NoSQL Databases
 - In-Memory Databases — Redis/Memcached vs. disk-based databases
 - Data Replication & Migration
