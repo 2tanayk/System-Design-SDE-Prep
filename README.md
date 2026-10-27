@@ -15,7 +15,8 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [How the Internet Works — DNS, TCP, TLS, HTTP](HLD/06-how-the-internet-works.md)
 - [SQL vs. NoSQL Databases](HLD/07-sql-vs-nosql.md)
 - [In-Memory vs. Disk-Based Databases](HLD/08-in-memory-vs-disk-based-databases.md)
-- Data Replication & Migration
+- [Database Replication](HLD/09-data-replication-and-migration.md)
+- [Data Migration & Schema Version Control](HLD/10-database-migrations-and-schema-version-control.md)
 - Data Partitioning — range and hash
 - Sharding — key selection and hot-shard problem
 
