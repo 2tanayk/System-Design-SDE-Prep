@@ -17,7 +17,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [In-Memory vs. Disk-Based Databases](HLD/08-in-memory-vs-disk-based-databases.md)
 - [Database Replication](HLD/09-data-replication-and-migration.md)
 - [Data Migration & Schema Version Control](HLD/10-database-migrations-and-schema-version-control.md)
-- Data Partitioning — range and hash
+- [Data Partitioning — range and hash; indexes vs. other strategies](HLD/11-data-partitioning-and-choosing-indexes.md)
 - Sharding — key selection and hot-shard problem
 
 #### Week 2 — Consistency, Availability + Cache
