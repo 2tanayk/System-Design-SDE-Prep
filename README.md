@@ -21,7 +21,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [Sharding — key selection and hot-shard problem](HLD/12-sharding-key-selection-and-hot-shards.md)
 
 #### Week 2 — Consistency, Availability + Cache
-- Data Consistency Levels — strong, eventual, causal
+- [Data Consistency Levels — strong, eventual, causal](HLD/13-data-consistency-levels.md)
 - Transaction Isolation Levels
 - CAP Theorem
 - Caching — Redis/Memcached and use cases
