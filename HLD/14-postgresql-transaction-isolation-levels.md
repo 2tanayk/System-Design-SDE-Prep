@@ -1,10 +1,10 @@
-# Transaction Isolation and Its Levels — PostgreSQL + Spring @Transactional
+# Transaction Isolation and Its Levels — PostgreSQL
 
 The focus of this topic is **transaction isolation**: what one transaction is allowed to observe while other transactions are running concurrently, and which anomalies each isolation level prevents.
 
-Locks, MVCC snapshots, and PostgreSQL's Serializable Snapshot Isolation (SSI) are supporting mechanisms. They matter because they explain the actual behavior, but the main subject is the four isolation levels and how to choose them in application code.
+Locks, MVCC snapshots, and PostgreSQL's Serializable Snapshot Isolation (SSI) are supporting mechanisms. They explain PostgreSQL's behavior, but the main subject is the four isolation levels, the anomalies they prevent, and how to choose between them.
 
-The examples use PostgreSQL and a small phone-store database. The final sections map the concepts to Spring's @Transactional annotation.
+The examples use PostgreSQL and a small phone-store database.
 
 ## 1. What does transaction isolation solve?
 
@@ -221,69 +221,7 @@ PostgreSQL-specific reminders:
 | Write skew | Possible | Possible | Prevented by aborting a transaction |
 | Typical application handling | Atomic updates/locks where required | Retry 40001 on concurrent-update conflict | Retry whole transaction on 40001 |
 
-## 5. Direct mapping to Spring @Transactional
-
-This is the application-facing connection for a Spring Boot developer.
-
-Spring exposes transaction isolation through the Isolation enum:
-
-- Isolation.DEFAULT
-- Isolation.READ_UNCOMMITTED
-- Isolation.READ_COMMITTED
-- Isolation.REPEATABLE_READ
-- Isolation.SERIALIZABLE
-
-Example:
-
-    import org.springframework.stereotype.Service;
-    import org.springframework.transaction.annotation.Isolation;
-    import org.springframework.transaction.annotation.Transactional;
-
-    @Service
-    public class OrderService {
-
-        @Transactional(isolation = Isolation.READ_COMMITTED)
-        public void placeOrder() {
-            // Read and update order-related data.
-        }
-
-        @Transactional(isolation = Isolation.REPEATABLE_READ)
-        public void generateConsistentReport() {
-            // Multiple reads share a stable transaction snapshot.
-        }
-
-        @Transactional(isolation = Isolation.SERIALIZABLE)
-        public void enforceComplexBusinessRule() {
-            // PostgreSQL may abort with SQLSTATE 40001.
-            // The application must retry the whole transaction.
-        }
-    }
-
-### What does DEFAULT mean?
-
-Spring's @Transactional isolation defaults to Isolation.DEFAULT. This means Spring uses the underlying datastore's default isolation level rather than forcing a specific level.
-
-For PostgreSQL, the default is Read Committed unless configured otherwise.
-
-### Important propagation interaction
-
-Spring's isolation setting applies when Spring starts a new transaction, such as with REQUIRED when no transaction already exists, or with REQUIRES_NEW.
-
-If a method using REQUIRED joins an existing transaction, it normally inherits the existing transaction's isolation. Its own isolation declaration does not silently upgrade the already-running transaction. Spring can be configured to reject incompatible existing transaction characteristics with validateExistingTransaction.
-
-Therefore, do not assume that putting @Transactional(isolation = Isolation.SERIALIZABLE) on an inner method automatically makes an already-running outer transaction Serializable.
-
-### Practical guidance
-
-- Start with the database default (commonly PostgreSQL Read Committed).
-- Use Repeatable Read when a transaction needs a stable view across multiple statements.
-- Use Serializable when correctness depends on a multi-row invariant that weaker isolation and simpler locking/constraints do not adequately protect.
-- Handle 40001 at the service boundary by retrying the complete transaction.
-- Remember that @Transactional is applied through Spring's transaction infrastructure; the call must pass through the Spring proxy for the annotation to take effect.
-
-Isolation is only one part of @Transactional. Propagation, rollback rules, timeout, readOnly, and transaction boundaries are separate concerns and should not be confused with isolation.
-
-## 6. Small PostgreSQL mechanisms that explain the behavior
+## 5. Small PostgreSQL mechanisms that explain the behavior
 
 These are supporting concepts, not the primary topic.
 
@@ -319,7 +257,7 @@ A deadlock is a circular wait (A holds one row and wants another; B holds the se
 - PostgreSQL Repeatable Read stale concurrent update: abort (40001).
 - Serializable dangerous dependency pattern: abort a transaction (40001).
 
-## 7. Hands-on PostgreSQL lab
+## 6. Hands-on PostgreSQL lab
 
 Use two psql sessions connected to the same database. Predict each result before executing it.
 
@@ -476,7 +414,7 @@ Repeat with SERIALIZABLE. PostgreSQL should abort one transaction with 40001 bec
 
 This experiment demonstrates why Repeatable Read alone does not prevent write skew.
 
-## 8. Choosing an isolation level in practice
+## 7. Choosing an isolation level in practice
 
 | Requirement | Starting point |
 |---|---|
@@ -489,18 +427,15 @@ This experiment demonstrates why Repeatable Read alone does not prevent write sk
 
 Do not automatically choose Serializable for every method. Pick the weakest level that correctly protects the business invariant, and use atomic statements, explicit locks, optimistic versioning, or constraints when they are a better fit.
 
-## 9. Interview summary
+## 8. Interview summary
 
 - **Read Uncommitted:** standard model allows dirty reads; PostgreSQL treats it as Read Committed.
 - **Read Committed:** each statement gets a fresh snapshot; non-repeatable reads, phantoms, read skew, lost updates, and write skew can occur.
 - **Repeatable Read:** PostgreSQL keeps a transaction-level snapshot; prevents non-repeatable reads, phantoms, and read skew, but write skew can still occur.
 - **Serializable:** successful transactions behave as though they ran in some serial order; PostgreSQL may abort a transaction with 40001, so the application retries the entire transaction.
-- **Spring mapping:** @Transactional(isolation = Isolation.X) selects the isolation when Spring starts a new transaction; DEFAULT delegates to the database's configured default.
 - Locks, MVCC and SSI explain how PostgreSQL implements these guarantees; they are supporting mechanisms, not separate isolation levels.
 
 ## References
 
 - [PostgreSQL 18 — Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
 - [PostgreSQL 18 — SET TRANSACTION](https://www.postgresql.org/docs/current/sql-set-transaction.html)
-- [Spring Framework — Using @Transactional](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
-- [Spring Framework — Isolation enum](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Isolation.html)
