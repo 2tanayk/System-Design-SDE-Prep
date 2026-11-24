@@ -25,7 +25,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [PostgreSQL Transaction Isolation — MVCC, locks, anomalies, and experiments](HLD/14-postgresql-transaction-isolation-levels.md)
 - [CAP Theorem — Consistency, Availability, and Partition Tolerance](HLD/15-cap-theorem.md)
 - [Caching Fundamentals — Redis, Memcached, and Use Cases](HLD/16-caching-fundamentals-redis-memcached.md)
-- Cache Write Policies — write-back, write-through, write-around
+- [Cache Write Policies — Write-Through, Write-Back, and Write-Around](HLD/17-cache-write-policies.md)
 - Cache Replacement Policies — LFU, LRU, Segmented LRU
 - Content Delivery Networks (CDNs)
 
