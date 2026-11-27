@@ -27,7 +27,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [Caching Fundamentals — Redis, Memcached, and Use Cases](HLD/16-caching-fundamentals-redis-memcached.md)
 - [Cache Write Policies — Write-Through, Write-Back, and Write-Around](HLD/17-cache-write-policies.md)
 - [Cache Replacement & Eviction Policies — LRU, LFU, SLRU, FIFO, and TTL](HLD/18-cache-replacement-and-eviction-policies.md)
-- Content Delivery Networks (CDNs)
+- [Content Delivery Networks (CDNs) — Edge Caching, DNS Routing, Cache Keys, and Origin](HLD/19-content-delivery-networks-cdns.md)
 
 #### Week 3 — Networking + Load Balancers
 - TCP vs. UDP
