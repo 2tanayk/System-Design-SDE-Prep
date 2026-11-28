@@ -30,7 +30,7 @@ System design notes for SDE preparation, organized in the order of the study roa
 - [Content Delivery Networks (CDNs) — Edge Caching, DNS Routing, Cache Keys, and Origin](HLD/19-content-delivery-networks-cdns.md)
 
 #### Week 3 — Networking + Load Balancers
-- TCP vs. UDP
+- [TCP vs. UDP — Transport Protocols, Ports, and Sockets](HLD/20-tcp-vs-udp.md)
 - HTTP/1.1, HTTP/2, HTTP/3 and HTTPS
 - WebSockets
 - WebRTC and Video Streaming
